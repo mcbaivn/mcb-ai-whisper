@@ -1,0 +1,7 @@
+{
+  "buildCommand": "npm run build:renderer",
+  "outputDirectory": "src/dist",
+  "framework": "vite",
+  "installCommand": "npm install",
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}
