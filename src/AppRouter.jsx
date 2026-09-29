@@ -10,6 +10,7 @@ import { useAuth } from "./hooks/useAuth";
 import { useSupabaseDeepLink } from "./hooks/useSupabaseDeepLink";
 import { useControlPanelWindowDrag } from "./hooks/useControlPanelWindowDrag";
 import { useTheme } from "./hooks/useTheme";
+import WebLanding from "./components/WebLanding";
 import { mirrorActiveAccountScope } from "./lib/accountScopeMirror";
 import { usePolicyStore } from "./stores/policyStore";
 import { resolveSettledControlPanelWindowMode } from "./utils/controlPanelWindowMode.ts";
@@ -28,6 +29,11 @@ const OnboardingFlow = React.lazy(() => import("./components/OnboardingFlow.tsx"
 export default function AppRouter() {
   useTheme();
   const params = window.location.search;
+
+  // Web (Vercel): no electronAPI -> show login-only landing, don't mount Electron app
+  if (typeof window !== "undefined" && !window.electronAPI) {
+    return <WebLanding />;
+  }
 
   if (params.includes("meeting-notification=true")) {
     return <MeetingNotificationOverlay />;
